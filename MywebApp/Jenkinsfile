@@ -18,6 +18,14 @@ pipeline {
                 sh ' cd MywebApp && mvn test'
             }
         }
+         stage ('Code Qualty Scan') {
+            
+           steps {
+                  withSonarQubeEnv('sonar') {
+             sh "mvn -f MywebApp/pom.xml sonar:sonar"      
+               }
+            }
+       }
       stage('deploy to tomcat') {
             steps {
               deploy adapters: [tomcat9(credentialsId: '0911dd23-9786-4347-b497-030631577934', path: '', url: 'http://44.201.168.157:8080/')], contextPath: 'myapp', war: '**/*.war'
