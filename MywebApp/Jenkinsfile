@@ -50,7 +50,7 @@ pipeline {
 
                  rtUpload (
 
-                     serverId: 'Artifactory',
+                     serverId: 'jfrog',
                        spec: ''' {
                                "files":[
                                     {
