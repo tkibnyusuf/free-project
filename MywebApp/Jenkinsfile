@@ -27,41 +27,7 @@ pipeline {
             }
        }
       
-          stage('Artifactory configuration') {
-
-           steps {
-
-             rtServer (
-         
-              id: "Artifactory",
-     
-               url: "http://3.231.162.43:8082/artifactory",
-
-               credentialsId: "	jfrog",
-                bypassProxy: true,
-                timeout: 300
-
-            )
-          }
-        }
-        stage('Artifact Upload') {
-
-             steps {
-
-                 rtUpload (
-
-                     serverId: 'jfrog',
-                       spec: ''' {
-                               "files":[
-                                    {
-                                    "pattern": "MywebApp/target/MywebApp.war",
-                                    "target": "logic-ops-lab/MywebApp-files"
-                                    }
-                                 ]
-                        }''',
-                 )
-             }
-        }
+    
       stage('deploy to tomcat') {
             steps {
               deploy adapters: [tomcat9(credentialsId: '0911dd23-9786-4347-b497-030631577934', path: '', url: 'http://44.201.168.157:8080/')], contextPath: 'myapp', war: '**/*.war'
